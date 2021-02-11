@@ -1,21 +1,12 @@
+<link rel="stylesheet" type="text/css" href="grid.css">
 
-    <link rel="stylesheet" type="text/css" href="grid.css">
-    
-    
-    
-
-
-    <canvas id="myCanvas" width="400" height="400" class="grid"></canvas>
+<canvas id="myCanvas" width="400" height="400" class="grid"></canvas>
     <br><br>
-    
-    <input type="text" id="getValues" placeholder="Enter Directions" />
-    <br>
-    <br>
-    <button onclick="move()" id="btn1">Submit</button>
-   
+<input type="text" id="getValues" placeholder="Enter Directions" />
+    <br><br>
+<button onclick="move()" id="btn1">Submit</button>
 
-
-   <script>
+<script>
 
 var ballRadius = 10;
 var xr = 25;
@@ -24,10 +15,25 @@ var dx =50;
 var dy =50;
 
 
-function drawBall() {
-    ctxball.clearRect(0, 0, canvas.width, canvas.height);
+function drawBall(item) {
+ctxball.clearRect(0, 0, canvas.width, canvas.height);
     ctxball.beginPath();
-    ctxball.arc(xr, yr, ballRadius, 0, Math.PI*1);
+    if(item=="L")
+        {
+           ctxball.arc(xr, yr, ballRadius, 7.9, Math.PI*1.5);
+        }
+       else if(item=="R")
+        {
+           ctxball.arc(xr, yr, ballRadius, 7.9, Math.PI*1.5,true);
+        }
+       else if(item=="U")
+        {
+           ctxball.arc(xr, yr, ballRadius, 0, Math.PI*1,true);
+        }
+        else if(item=="D")
+        {
+           ctxball.arc(xr, yr, ballRadius, 0, Math.PI*1);
+        }
     ctxball.fillStyle = "black";
     ctxball.fill();
     ctxball.closePath();
@@ -45,31 +51,30 @@ function drawBall() {
 
     function myFunction(item,index)
     {
-        console.log(index+" ."+item);
 
         if(item=="L")
         {
             dx=-50;
             dy=0;
-            draw(dx,dy);
+            draw(dx,dy,item);
         }
        else if(item=="R")
         {
             dx=50;
             dy=0;
-            draw(dx,dy);
+            draw(dx,dy,item);
         }
        else if(item=="U")
         {
             dy=-50;
             dx=0;
-            draw(dx,dy);
+            draw(dx,dy,item);
         }
         else if(item=="D")
         {
             dy=50;
             dx=0;
-            draw(dx,dy);
+            draw(dx,dy,item);
         }
     }
 
@@ -80,10 +85,7 @@ var ctxball = canvas.getContext("2d");
 
 
 
-function draw(w, h, id) {
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // console.log("dx "+dx+" "+"dy "+dy);    
-console.log(canvas.width+" "+canvas.height);
+function draw(w, h, item) {   
     if(xr + dx >=canvas.width-ballRadius || xr + dx < ballRadius) {
         dx = -dx;
         alert("OutSide The Grid");
@@ -93,19 +95,16 @@ console.log(canvas.width+" "+canvas.height);
         alert("OutSide The Grid");
     }
     else{
-    console.log("x "+xr+" "+"y "+yr);
     xr += dx;
     yr += dy;
-    console.log("x "+xr+" "+"y "+yr);
-    // drawBall();
-    drawGrid(400,400,myCanvas);
+    drawGrid(400,400,item);
     }
 
 }
 
 
-function drawGrid(w, h, id) {
-    drawBall();
+function drawGrid(w, h,item) {
+    drawBall(item);
     
     for (x=0;x<=w;x+=50) {
         for (y=0;y<=h;y+=50) {
@@ -119,7 +118,6 @@ function drawGrid(w, h, id) {
     }
 }
 
-drawGrid(400,400,myCanvas);
+drawGrid(400,400,"L");
 
     </script>
-
