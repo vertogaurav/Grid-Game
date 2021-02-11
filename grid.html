@@ -1,0 +1,123 @@
+
+    <link rel="stylesheet" type="text/css" href="grid.css">
+    
+    
+    
+
+
+    <canvas id="myCanvas" width="400" height="400" class="grid"></canvas>
+    <br><br>
+    
+    <input type="text" id="getValues" placeholder="Enter Directions" />
+    <br>
+    <br>
+    <button onclick="move()" id="btn1">Submit</button>
+   
+
+
+   <script>
+
+var ballRadius = 10;
+var xr = 25;
+var yr = 25;
+var dx =50;
+var dy =50;
+
+
+function drawBall() {
+    ctxball.beginPath();
+    ctxball.arc(xr, yr, ballRadius, 0, Math.PI*1);
+    ctxball.fillStyle = "black";
+    ctxball.fill();
+    ctxball.closePath();
+}
+
+
+
+    function move(){
+       var str=document.getElementById("getValues").value;
+       dir=str.split(",");
+       dir.forEach(myFunction);
+       console.log("Input "+dir);
+    }
+
+
+    function myFunction(item,index)
+    {
+        console.log(index+" ."+item);
+
+        if(item=="L")
+        {
+            dx=-50;
+            dy=0;
+            draw(dx,dy);
+        }
+       else if(item=="R")
+        {
+            dx=50;
+            dy=0;
+            draw(dx,dy);
+        }
+       else if(item=="U")
+        {
+            dy=-50;
+            dx=0;
+            draw(dx,dy);
+        }
+        else if(item=="D")
+        {
+            dy=50;
+            dx=0;
+            draw(dx,dy);
+        }
+    }
+
+
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var ctxball = canvas.getContext("2d");
+
+
+
+function draw(w, h, id) {
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // console.log("dx "+dx+" "+"dy "+dy);    
+console.log(canvas.width+" "+canvas.height);
+    if(xr + dx >=canvas.width-ballRadius || xr + dx < ballRadius) {
+        dx = -dx;
+        alert("OutSide The Grid");
+    }
+    else if(yr + dy >= canvas.height-ballRadius || yr + dy < ballRadius) {
+        dy = -dy;
+        alert("OutSide The Grid");
+    }
+    else{
+    console.log("x "+xr+" "+"y "+yr);
+    xr += dx;
+    yr += dy;
+    console.log("x "+xr+" "+"y "+yr);
+    drawBall();
+    }
+
+}
+
+
+function drawGrid(w, h, id) {
+    drawBall();
+    
+    for (x=0;x<=w;x+=50) {
+        for (y=0;y<=h;y+=50) {
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, h);
+            ctx.stroke();
+            ctx.moveTo(0, y);
+            ctx.lineTo(w, y);
+            ctx.stroke();
+        }
+    }
+}
+
+drawGrid(400,400,myCanvas);
+
+    </script>
+
