@@ -25,6 +25,7 @@ var dy =50;
 
 
 function drawBall() {
+    ctxball.clearRect(0, 0, canvas.width, canvas.height);
     ctxball.beginPath();
     ctxball.arc(xr, yr, ballRadius, 0, Math.PI*1);
     ctxball.fillStyle = "black";
@@ -96,7 +97,8 @@ console.log(canvas.width+" "+canvas.height);
     xr += dx;
     yr += dy;
     console.log("x "+xr+" "+"y "+yr);
-    drawBall();
+    // drawBall();
+    drawGrid(400,400,myCanvas);
     }
 
 }
